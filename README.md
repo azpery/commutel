@@ -1,7 +1,8 @@
 # commutel
 
 Commutel est une application développée en python, elle simule un commutateur d'appels. Ici la voix est remplacée par la du texte.
-##Installation
+
+#Installation
 Afin d'installer commutel sur son poste il est nécessaire d'avoir **Python** d'installé ainsi que le package **Enum**.
 Il est possible d'interprété le code sur Mac || Linux || Windows.
 
