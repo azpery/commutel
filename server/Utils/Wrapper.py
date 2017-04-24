@@ -2,7 +2,7 @@ class Wrapper:
 
     @staticmethod
     def wrapStatus( message):
-        return "/s " + message
+        return "/s " + str(message)
 
     @staticmethod
     def wrapMessage(message):

@@ -6,12 +6,15 @@ from client.UI import UI
 
 class ComposerUI(UI.UI):
 
-    def __init__(self, actionComposer):
-        UI.UI.__init__(self)
+    def __init__(self, actionComposer, tk):
+        UI.UI.__init__(self, tk)
 
         self.actionComposer = actionComposer
         welcomeLabel = Tkinter.Label(self.top, text="Bienvenue sur CommuTel")
         welcomeLabel.pack()
+
+        self.statut = Tkinter.Label(self.top, text="Vous êtes ")
+        self.statut.pack()
 
         self.numLabel = Tkinter.Label(self.top, text="")
         self.numLabel.pack()
@@ -40,3 +43,6 @@ class ComposerUI(UI.UI):
 
     def updateNumeroTelephoneUtilisateur(self, numTel):
         self.numLabel.configure( text="Votre numéro :" + str(numTel))
+
+    def updateStatut(self, statut):
+        self.statut.configure( text="Vous êtes " + statut)

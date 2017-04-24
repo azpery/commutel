@@ -1,10 +1,9 @@
 import Tkinter
 import tkMessageBox
-from Tkinter import *
 
 class UI:
-    def __init__(self):
-        self.top = Tkinter.Tk()
+    def __init__(self, tk):
+        self.top = tk
 
     @staticmethod
     def printMessageBox(title, message):

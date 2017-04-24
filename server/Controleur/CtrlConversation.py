@@ -16,8 +16,6 @@ class CtrlConversation:
         self.bucket = Bucket()
         self.CONNECTION_LIST = [appele.sock, appelant.sock]
         self.parent = parent
-        self.parent.CONNECTION_LIST.remove(appelant.sock)
-        self.parent.CONNECTION_LIST.remove(appele.sock)
         self.RECV_BUFFER = config["RECV_BUFFER"]
         self.stop = False
 
@@ -50,8 +48,9 @@ class CtrlConversation:
                                     self.parent.sendMessageTo(self.appele.sock, data)
                                 self.CONNECTION_LIST = []
                                 self.stop = True
-                                self.parent.CONNECTION_LIST.append(self.appelant.sock)
-                                self.parent.CONNECTION_LIST.append(self.appele.sock)
+                                self.appelant.statut = statut.READY_FOR_CONVERSATION
+                                self.appele.statut = statut.READY_FOR_CONVERSATION
+
 
 
                     except:

@@ -6,8 +6,8 @@ from client.UI.UI import UI
 
 class CtrlComposition(Ctrl):
 
-    def __init__(self, parent):
-        self.composerUI = ComposerUI(self.composer)
+    def __init__(self, parent, tk):
+        self.composerUI = ComposerUI(self.composer, tk)
         Ctrl.__init__(self, parent)
 
     def start(self):

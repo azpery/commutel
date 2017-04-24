@@ -23,6 +23,10 @@ class CtrlCommunication(Ctrl):
         wrappedCommand = self.wrapper.wrapMessage(message)
         self.api.send(wrappedCommand)
 
+    def decrocher(self):
+        wrappedCommand = self.wrapper.wrapStatus(statut.READY_FOR_CONVERSATION)
+        self.api.send(wrappedCommand)
+
     def raccrocher(self):
         wrappedCommand = self.wrapper.wrapStatus(statut.DISCONNECTED)
         self.api.send(wrappedCommand)
@@ -36,17 +40,21 @@ class CtrlCommunication(Ctrl):
         elif self.bucket.getNatureOfLastMessage() == command.MESSAGE and self.parent.statut == statut.REGISTRED:
             self.parent.updateNumeroTelephoneUtilisateur(self.bucket.getInnerMessage())
         elif self.bucket.getNatureOfLastMessage() == command.ASK:
-            self.parent.demandeCommunication(self.bucket.getInnerMessage())
+            self.parent.queue.put((self.parent.demandeCommunication, self.bucket.getInnerMessage()))
         elif self.bucket.getNatureOfLastMessage() == command.MESSAGE and self.parent.statut == statut.BUSY:
             self.parent.recevoirMessage(self.bucket.getInnerMessage())
         elif self.bucket.getNatureOfLastMessage() == command.STATUS and int(
                 self.bucket.getInnerMessage()) == statut.READY_FOR_CONVERSATION and self.parent.statut == statut.COMPOSING:
             print "debut conversation"
-            self.parent.demarrerConversation(False)
+            self.parent.queue.put((self.parent.demarrerConversation,True))
+        elif self.bucket.getNatureOfLastMessage() == command.STATUS and int(
+                self.bucket.getInnerMessage()) == statut.BUSY and self.parent.statut == statut.COMPOSING:
+            print "debut conversation"
+            self.parent.queue.put((self.parent.destinataireOccupe,True))
         elif self.bucket.getNatureOfLastMessage() == command.STATUS and int(
                 int(self.bucket.getInnerMessage())) == statut.DISCONNECTED and self.parent.statut == statut.BUSY:
-            print "debut conversation"
-            self.parent.raccrocher()
+            print "Fin conversation"
+            self.parent.queue.put((self.parent.raccrocher, True))
 
     #Implémentation méthode abstraite
     def backgroundAction(self):

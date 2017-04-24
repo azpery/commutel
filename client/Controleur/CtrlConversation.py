@@ -13,7 +13,7 @@ class CtrlConversation(Ctrl):
         Ctrl.__init__(self, parent)
 
     def raccrocher(self):
-        self.parent.raccrocher()
+        self.parent.raccrocher(True)
         self.quit()
 
     def envoyer(self):

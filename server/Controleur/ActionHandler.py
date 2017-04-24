@@ -16,11 +16,14 @@ class ActionHandler:
     def handle(self,data, sock):
         self.bucket.addMessage(data)
         if self.bucket.getNatureOfLastMessage() == command.ASK:
+            appele = self.getUserFromNumTel(self.bucket.getInnerMessage())
+            appelant = self.getUserFromSock(sock)
             if self.isDestAvailable(self.bucket.getInnerMessage()):
-                appele = self.getUserFromNumTel(self.bucket.getInnerMessage())
-                appelant = self.getUserFromSock(sock)
                 ctrlCommunication = CtrlConversation(appelant,appele,self.parent)
                 ctrlCommunication.startLoop()
+            else:
+                self.parent.sendMessageTo(appelant.sock, Wrapper.wrapStatus(str(statut.BUSY)))
+
 
     def initiateConnectionWithNewUser(self, user):
         self.parent.sendMessageTo(user.sock, Wrapper.wrapStatus("202"))

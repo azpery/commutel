@@ -1,3 +1,4 @@
+# coding=utf-8
 import time
 
 from client.Controleur.Ctrl import Ctrl
@@ -5,13 +6,13 @@ from client.UI.RecevoirUI import RecevoirUI
 
 
 class CtrlRecevoir(Ctrl):
-    def __init__(self, parent, interlocuteur):
+    def __init__(self, parent, interlocuteur, tk):
         self.stop = False
-        self.recevoirUI = RecevoirUI(self.decrocher, interlocuteur)
+        self.recevoirUI = RecevoirUI(self.decrocher, interlocuteur, tk)
         Ctrl.__init__(self, parent)
 
     def decrocher(self):
-        self.parent.decrocher()
+        self.parent.queue.put((self.parent.decrocher, True))
 
     def backgroundAction(self):
         for t in range(60, -1, -1):

@@ -6,6 +6,8 @@ from server.Controleur.ActionHandler import ActionHandler
 from server.Infra.Config import config
 from server.Model.Utilisateur import Utilisateur
 
+from server.Model.Statut import statut
+
 
 class Commutateur:
     def __init__(self):
@@ -40,17 +42,18 @@ class Commutateur:
                     print "Client (%s, %s) connected" % addr
                     self.actionHandler.initiateConnectionWithNewUser(utilisateur)
                 else:
-                    try:
-                        data = sock.recv(self.RECV_BUFFER)
-                        if data:
-                            print data
-                            self.actionHandler.handle(data, sock)
+                    if self.actionHandler.getUserFromSock(sock).statut == statut.READY_FOR_CONVERSATION:
+                        try:
+                            data = sock.recv(self.RECV_BUFFER)
+                            if data:
+                                print data
+                                self.actionHandler.handle(data, sock)
 
-                    except:
-                        #self.sendMessageTo(sock, "Client (%s, %s) if offline" % addr)
-                        sock.close()
-                        self.CONNECTION_LIST.remove(sock)
-                        continue
+                        except:
+                            #self.sendMessageTo(sock, "Client (%s, %s) if offline" % addr)
+                            sock.close()
+                            self.CONNECTION_LIST.remove(sock)
+                            continue
 
         self.server_socket.close()
 
@@ -60,5 +63,6 @@ class Commutateur:
             try:
                 socket.send(message)
             except:
-                socket.close()
-                self.CONNECTION_LIST.remove(socket)
+                pass
+                #socket.close()
+                #self.CONNECTION_LIST.remove(socket)

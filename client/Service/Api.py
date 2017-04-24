@@ -46,4 +46,5 @@ class Api:
                     self.callback(data)
 
     def send(self, msg):
+        print "envoi" + msg
         self.s.send(msg)

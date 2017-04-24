@@ -4,10 +4,10 @@ import Tkinter
 from client.UI import UI
 
 
-class RecevoirUI(UI.UI):
+class RecevoirUI:
 
-    def __init__(self, actionDecrocher, interlocuteur):
-        UI.UI.__init__(self)
+    def __init__(self, actionDecrocher, interlocuteur, tk):
+        self.top = Tkinter.Toplevel(tk)
         self.interlocuteur = interlocuteur
         self.actionDecrocher = actionDecrocher
         appelLabel = Tkinter.Label(self.top, text="Appel entrant")
