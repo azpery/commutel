@@ -55,6 +55,10 @@ class CtrlCommunication(Ctrl):
                 int(self.bucket.getInnerMessage())) == statut.DISCONNECTED and self.parent.statut == statut.BUSY:
             print "Fin conversation"
             self.parent.queue.put((self.parent.raccrocher, True))
+        elif self.bucket.getNatureOfLastMessage() == command.ERROR and int(
+                int(self.bucket.getInnerMessage())) == statut.NOT_FOUND and self.parent.statut == statut.COMPOSING:
+            print "Destinataire inexistant"
+            self.parent.queue.put((self.parent.destinataireInexistant, True))
 
     #Implémentation méthode abstraite
     def backgroundAction(self):

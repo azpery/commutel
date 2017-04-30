@@ -21,8 +21,10 @@ class ActionHandler:
             if self.isDestAvailable(self.bucket.getInnerMessage()):
                 ctrlCommunication = CtrlConversation(appelant,appele,self.parent)
                 ctrlCommunication.startLoop()
-            else:
+            elif self.isDestExists(self.bucket.getInnerMessage()):
                 self.parent.sendMessageTo(appelant.sock, Wrapper.wrapStatus(str(statut.BUSY)))
+            else:
+                self.parent.sendMessageTo(appelant.sock, Wrapper.wrapError(str(statut.NOT_FOUND)))
 
 
     def initiateConnectionWithNewUser(self, user):
@@ -33,6 +35,11 @@ class ActionHandler:
     def isDestAvailable(self, numTel):
         for user in self.parent.connectedUser :
             if user.numTel == numTel and user.statut == statut.READY_FOR_CONVERSATION:
+                return True
+        return False
+    def isDestExists(self, numTel):
+        for user in self.parent.connectedUser :
+            if user.numTel == numTel:
                 return True
         return False
 
