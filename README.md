@@ -6,6 +6,12 @@ Commutel est une application développée en python, elle simule un commutateur 
 Afin d'installer commutel sur son poste il est nécessaire d'avoir **Python** d'installé ainsi que le package **Enum**.
 Il est possible d'interprété le code sur Mac || Linux || Windows.
 
+Nous préconisons une installation sur machine **linux**. 
+
+Pour faciliter l'installation des dépendances, veuillez lancer dans un terminal le script d'installation des dépendances.
+
+`sudo ./install `
+
 ### Sur Mac OS
 Installation de brew:
 

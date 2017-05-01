@@ -1,0 +1,4 @@
+#/bin/bash
+sudo apt-get install python
+sudo apt-get install python-tk
+sudo pip install enum
