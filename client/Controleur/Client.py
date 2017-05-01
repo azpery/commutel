@@ -52,6 +52,10 @@ class Client:
         UI.printMessageBox("Destinataire occupé", "Votre destinataire est actuellement occupé")
         self.updateStatut(statut.READY_FOR_CONVERSATION)
 
+    def destinataireInexistant(self, t):
+        UI.printMessageBox("Destinataire inexistant", "Le numéro que vous avez composé n'est pas attribué.")
+        self.updateStatut(statut.READY_FOR_CONVERSATION)
+
 
     def updateStatut(self, s):
         print "Changement de statut:" + str(statut)

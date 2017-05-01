@@ -10,3 +10,4 @@ class statut(Enum):
     REGISTRED = 4
     TIME_OUT = 13
     PENDING = 66
+    NOT_FOUND = 404
